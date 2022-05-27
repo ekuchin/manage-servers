@@ -1,0 +1,41 @@
+---
+- name: Manage docker config & containers 
+  hosts: all
+  become: yes
+  gather_facts: false 
+
+  tasks:  
+
+# Docker
+
+  - name: Install Docker Module for Python
+    pip:
+      name: docker
+
+# Vote
+
+  - name: Pull Vote image
+    containers.podman.podman_image:
+      name: docker.io/ekuchin/vote
+
+  - name: Vote container
+    containers.podman.podman_container:
+      name: vote
+      image: ekuchin/vote
+      state: started
+      ports: "2022:8080"
+      restart_policy: unless-stopped
+
+# Site
+
+  - name: Pull Site image
+    containers.podman.podman_image:
+      name: docker.io/ekuchin/site
+
+  - name: Site container
+    containers.podman.podman_container:
+      name: site
+      image: ekuchin/site
+      state: started
+      ports: "80:8080"
+      restart_policy: unless-stopped
