@@ -8,36 +8,29 @@
 
 # Docker
 
-  - name: Install Docker Module for Python
-    pip:
+  - name: Docker started and enabled
+    service:
       name: docker
+      state: started
+      enabled: true
 
 # Vote
-
-  - name: Pull Vote image
-    containers.podman.podman_image:
-      name: docker.io/ekuchin/vote
-      pull: true
-
   - name: Vote container
-    containers.podman.podman_container:
+    docker_container:
       name: vote
       image: docker.io/ekuchin/vote
+      pull: true
       state: started
       ports: "2022:8080"
       restart_policy: unless-stopped
 
 # Site
 
-  - name: Pull Site image
-    containers.podman.podman_image:
-      name: docker.io/ekuchin/site
-      pull: true
-
   - name: Site container
-    containers.podman.podman_container:
+    docker_container:
       name: site
       image: docker.io/ekuchin/site:latest
+      pull: true
       state: started
       ports: "80:8080"
       restart_policy: unless-stopped

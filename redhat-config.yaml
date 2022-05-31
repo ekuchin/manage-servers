@@ -1,18 +1,18 @@
 ---
 - name: Configure Redhat
   hosts: all
-  gather_facts: false
+  gather_facts: true
 
   vars:
     package_list:
       - mc
       - htop
-      - docker
+      - podman
   
   tasks:
   - name: Install packages
     dnf:
       name: "{{item}}"
-      state: latest
+      state: present
     loop: "{{package_list}}"
     become: true
