@@ -21,7 +21,7 @@
       image: docker.io/ekuchin/vote
       pull: true
       state: started
-      ports: "2022:80"
+      ports: "2022:8080"
       restart_policy: unless-stopped
 
 # Site
@@ -32,5 +32,5 @@
       image: docker.io/ekuchin/site:latest
       pull: true
       state: started
-      ports: "80:80"
+      ports: "80:8080"
       restart_policy: unless-stopped
